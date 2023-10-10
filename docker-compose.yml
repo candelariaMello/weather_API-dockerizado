@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  locations:
+    image: locations:1
+    depends_on:
+      - db-users
+    ports:
+      - "8080:8080"
+
+    environment:
+      APP_NAME: weather-locations
+      SPRING_DATASOURCE_URL: jdbc:mysql://db-users:3306/users
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+
+  db-users:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: users
+    ports:
+      - "3306:3306"
+    volumes:
+      - users_db_volume:/var/lib/mysql
+volumes:
+  users_db_volume:
